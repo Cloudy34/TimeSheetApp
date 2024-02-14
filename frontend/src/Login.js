@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
-//techy web dev - 24.10
-// things to imporve-- this all should be in the sign in page...
+////techy web dev - 24.10
+//things to imporve-- this all should be in the sign in page...
 function Login() {
   const history = useNavigate();
   const navigate = useNavigate();
@@ -22,35 +22,41 @@ function Login() {
       return;
     }
 
-    // Make POST request to server for login
-    axios
-      .post("http://localhost:8000/", {
+    try {
+      // Make POST request to server for login
+      const response = await axios.post("http://localhost:8000/", {
         username,
         password,
-      })
-
-      .then((res) => {
-        const { data } = res; // Destructure the response data
-        console.log("data: ", res);
-        if (data === "exist") {
-         
-          history("/home", { state: { id: username } });
-         
-        } else if (data === "notexist") {
-          alert("Incorrect email or password");
-        } else if (data === "incorrectpassword") {
-          alert("Incorrect password");
-        } else {
-          alert("Error ");
-        }
-      })
-
-      .catch((error) => {
-        console.error("Error logging in:", error);
-        alert("Error");
       });
-  }
 
+      // Destructure the response data
+      const { data } = response;
+
+      if (data.status === "success") {
+        // Assuming the role information is included in the response data
+        const role = data.user.role;
+        // console.log("Role:", role);
+        if (role === "admin") {
+          navigate("/admin/dashboard", { state: { id: username } });
+        } else if (role === "manager") {
+          navigate("/manager/dashboard", { state: { id: username } });
+        } else if (role === "employee") {
+          navigate("/employee/dashboard", { state: { id: username } });
+        } else {
+          alert("Unknown role");
+        }
+      } else if (data === "notexist") {
+        alert("Incorrect email or password");
+      } else if (data === "incorrectpassword") {
+        alert("Incorrect password");
+      } else {
+        alert("Error ");
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+      alert("Error");
+    }
+  }
   return (
     <div className="container">
       <div className="form-container">
