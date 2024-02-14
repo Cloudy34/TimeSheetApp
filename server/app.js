@@ -15,7 +15,7 @@ app.get("/", cors(), (req, res) => {});
 const port = process.env.PORT;
 
 app.post("/", async (req, res) => {
-  const { fullname, phone, username, email, password } = req.body;
+  const {  username,  password } = req.body;
 
   try {
     const user = await collection.findOne({ username: username });
@@ -26,7 +26,7 @@ app.post("/", async (req, res) => {
     } else {
       // Email exists, check password
       if (user.password === password) {
-        res.json("exist");
+        res.json({ status: "success", user: user });
       } else {
         // Incorrect password
         res.json("incorrectpassword");
@@ -73,8 +73,8 @@ app.get("/admin/dashboard", async (req, res) => {
     }
 
     // If authorized, return the admin dashboard message
- res.json({ role: user.role });
- } catch (error) {
+    res.json({ role: user.role });
+  } catch (error) {
     // Error occurred
     console.error("Error accessing admin dashboard:", error);
     res.status(500).json({
