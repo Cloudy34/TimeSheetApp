@@ -1,0 +1,180 @@
+/* styles.css */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+:root {
+  --yellow: linear-gradient(180deg, #F8D49A -146.42%, #FAD79D -46.42%);
+  --orange: #fca61f;
+  --black: #242d49;
+  --gray: #788097;
+  --purple: linear-gradient(180deg, #BB67FF 0%, #C484F3 100%);
+  --pink: #FF919D;
+  --glass: rgba(255, 255, 255, 0.54);
+  --boxShadow: 0px 19px 60px rgb(0 0 0 / 8%);
+  --smboxShadow: -79px 51px 60px rgba(0, 0, 0, 0.08);
+  --activeItem: #f799a354;
+}
+
+.App {
+  /* padding: 0.5rem 3.5rem; */
+  color: var(--black);
+  background: linear-gradient(
+    106.37deg,
+    #ffe1bc 29.63%,
+    #ffcfd1 51.55%,
+    #f3c6f1 90.85%
+  );
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+}
+
+.AppGlass {
+  display: flex;
+  background: var(--glass);
+  border-radius: 2rem;
+  
+
+  
+}
+
+
+
+@media screen and (max-width: 768px) {
+  .AppGlass{
+    grid-template-columns: 1fr;
+  } 
+}
+
+.form-container {
+  width: 300px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  background-color: #f9f9f9;
+}
+
+.form-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-group button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.form-group button:hover {
+  background-color: #0056b3;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+.form-container {
+  background: linear-gradient(#c0edc7,#92d7d5);
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+}
+.login-header {
+  font-family: Brush script; /* Use Arial font with fallback to sans-serif */
+  font-size: 35px; /* Adjust font size as needed */
+  font-weight: bolder; /* Make the text bold */
+  color: #587d7a; /* Set the text color */
+  margin-bottom: 20px; /* Add some bottom margin for spacing */
+  
+}
+.button2{
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  background-color: #819a5d; /* Blue color */
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 111.8%;
+  align-content:center;
+  justify-self: center;
+  text-align: center;
+  /* Use Arial font with fallback to sans-serif */
+}
+.button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  background-color: #819a5d; /* Blue color */
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 111.8%;
+  align-content:center;
+  justify-self: center;
+  text-align: center;
+  /* Use Arial font with fallback to sans-serif */
+  
+
+}
+.sign {
+  font-family: Brush script; /* Use Arial font with fallback to sans-serif */
+  display: inline-block;
+  margin-left: 20px;
+  padding:8px 20px ;
+  background-color: #0056b3;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 30px;
+  transition: background-color 0.3s ease;
+  width:40%;
+  align-content:center;
+  justify-self: center;
+  text-align: center;
+
+}
+
+.sign:hover {
+  background-color: #819a5d;
+}
+
+.button:hover {
+  background-color: #0056b3; /* Darker shade of blue on hover */
+}
+.button2:hover {
+  background-color: #0056b3; /* Darker shade of blue on hover */
+}
