@@ -5,6 +5,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import "../App.css";
 
 function Signup() {
   const history = useNavigate();
@@ -112,10 +113,9 @@ function Signup() {
         </form>
 
         <div>
-          <p>OR</p>
-          <Link className="sign" to="/">
-            {" "}
-            Login{" "}
+          <p className="or">OR</p>
+          <Link className="log" to="/">
+            Login
           </Link>
         </div>
       </div>

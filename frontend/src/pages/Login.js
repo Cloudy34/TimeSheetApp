@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import "../App.css";
 
 ////techy web dev - 24.10
 //things to imporve-- this all should be in the sign in page...
@@ -89,9 +90,9 @@ function Login() {
           </button>
           {error && <p className="error-message">{error}</p>}
         </form>
-        <p>OR</p>
+        <p className="or">OR</p>
         <Link className="sign" to="/signup">
-          Signup Page
+          Signup
         </Link>
       </div>
     </div>
