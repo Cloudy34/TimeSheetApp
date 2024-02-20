@@ -4,8 +4,6 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import "../App.css";
 
-////techy web dev - 24.10
-//things to imporve-- this all should be in the sign in page...
 function Login() {
   const history = useNavigate();
   const navigate = useNavigate();
@@ -100,4 +98,3 @@ function Login() {
 }
 
 export default Login;
-//How To Manage User Roles In Node.js - web dev simplified
