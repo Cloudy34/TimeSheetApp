@@ -1,13 +1,14 @@
-/* eslint-disable eqeqeq */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux"; // Import useDispatch hook
 import { useNavigate, Link } from "react-router-dom";
 import "../App.css";
+import { login } from "store/Authentication/actions";
 
 function Login() {
   const history = useNavigate();
   const navigate = useNavigate();
-  //const [email, setEmail] = useState("");
+  const dispatch = useDispatch(); // Initialize useDispatch hook
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -15,47 +16,21 @@ function Login() {
   async function submit(e) {
     e.preventDefault();
 
-    // Check if email or password is missing
     if (!username || !password) {
-      alert("Please enter both email and password");
+      alert("Please enter both username and password");
       return;
     }
 
     try {
-      // Make POST request to server for login
-      const response = await axios.post("http://localhost:8000/", {
-        username,
-        password,
-      });
-
-      // Destructure the response data
-      const { data } = response;
-
-      if (data.status === "success") {
-        // Assuming the role information is included in the response data
-        const role = data.user.role;
-        // console.log("Role:", role);
-        if (role === "admin") {
-          navigate("/admin/dashboard", { state: { id: username } });
-        } else if (role === "manager") {
-          navigate("/manager/dashboard", { state: { id: username } });
-        } else if (role === "employee") {
-          navigate("/employee/dashboard", { state: { id: username } });
-        } else {
-          alert("Unknown role");
-        }
-      } else if (data === "notexist") {
-        alert("Incorrect email or password");
-      } else if (data === "incorrectpassword") {
-        alert("Incorrect password");
-      } else {
-        alert("Error ");
-      }
+      // Dispatch login action with username and password
+      dispatch(login({ username, password }));
+      
     } catch (error) {
       console.error("Error logging in:", error);
-      alert("Error");
+      alert("Error logging in");
     }
   }
+
   return (
     <div className="container">
       <div className="form-container">

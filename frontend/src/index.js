@@ -1,16 +1,9 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
-import { configureStore } from "@reduxjs/toolkit";
-import globalReducer from "state";
+import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+import store from "store/store";
 
 import App from "./App";
-
-const store = configureStore({
-  reducer: {
-    global: globalReducer,
-  },
-});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
