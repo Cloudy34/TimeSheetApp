@@ -8,7 +8,10 @@ import { useTheme } from '@emotion/react';
 import { AppBar, IconButton, InputBase, Toolbar, useThemeProps } from '@mui/material';
 
 
-const Navbar = () =>{
+const Navbar = ({
+  isSidebarOpen,
+  setIsSidebarOpen,
+}) =>{
     const dispatch = useDispatch();
     const theme = useTheme();
   return <AppBar
@@ -22,7 +25,7 @@ const Navbar = () =>{
 
             {/* LeftSide */}
             <FlexBetween>
-                <IconButton onClick={() => console.log("open/close sidebar")}>
+                <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                     <MenuIcon />
                 </IconButton>
                 <FlexBetween

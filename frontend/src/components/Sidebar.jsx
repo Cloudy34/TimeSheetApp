@@ -17,21 +17,27 @@ import {
     ChevronLeft,
     ChevronRightOutlined,
     HomeOutlined,
+    AssignmentIndOutlined,
     ShoppingCartOutlined,
     Groups2Outlined,
     RecieptLongOutlined,
     PublicOutlined,
     PointOfSaleOutlined,
     TodayOutlined,
-    CalenderMonthOutlined,
     AdminPanelSettingsOutlined,
     TrendngUpOutlined,
-    PieChartOutlined
+    PieChartOutlined,
+    TaskOutlined,
+    FolderSharedOutlined,
+    PeopleAltOutlined,
+    TaskAltOutlined,
+    SupervisedUserCircleOutlined,
 } from "@mui/icons-material";
 import { useEffect,useState } from 'react';
 import { useLocation,useNavigate } from 'react-router-dom';
 import FlexBetween from './FlexBetween';
 import profileImage from "assets/profile.png";
+import EventNoteOutlinedIcon from '@mui/icons-material/EventNoteOutlined';
 
 const navItems = [
     {
@@ -42,17 +48,18 @@ const navItems = [
     {
         text: "Client",
         icon:null,
+        url: "employee/dashboard",
 
     },
     {
         text: "Details",
-        icon:<HomeOutlined /> ,
+        icon:<AssignmentIndOutlined /> ,
         url: "client",
 
     },
     {
         text: "Tasks",
-        icon:<HomeOutlined /> 
+        icon:<TaskOutlined /> 
     },
     {
         text: "Team",
@@ -60,19 +67,19 @@ const navItems = [
     },
     {
         text: "Details",
-        icon:<HomeOutlined />
+        icon:<FolderSharedOutlined />
     },
     {
         text: "Members",
-        icon:<HomeOutlined />
+        icon:<PeopleAltOutlined />
     },
     {
         text: "Tasks",
-        icon:<HomeOutlined />
+        icon:<TaskAltOutlined />
     },
     {
         text: "Roles",
-        icon:<HomeOutlined />
+        icon:<SupervisedUserCircleOutlined />
     },
     {
         text: "TimeSheet",
@@ -80,11 +87,11 @@ const navItems = [
     },
     {
         text: "Daily",
-        icon:<HomeOutlined />
+        icon:<TodayOutlined />
     },
     {
         text: "Monthly",
-        icon:<HomeOutlined />
+        icon:<EventNoteOutlinedIcon />
     },
 ]
 
@@ -184,4 +191,4 @@ const Sidebar = ({
   </Box>
 }
 
-export default Sidebar
+export default Sidebar;
