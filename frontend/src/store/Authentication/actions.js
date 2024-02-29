@@ -6,8 +6,8 @@ import {
   LOGOUT_FAIL 
 } from './actionTypes';
 
-const ENDPOINT_LOGIN = '/api/login';
-const ENDPOINT_LOGOUT = '/api/logout';
+const ENDPOINT_LOGIN = '/login';
+const ENDPOINT_LOGOUT = '/logout';
 
 export const login = (credentials) => async (dispatch) => {
     console.log("sent creds: ", credentials)
