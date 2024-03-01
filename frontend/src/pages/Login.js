@@ -23,8 +23,7 @@ function Login() {
 
     try {
       // Dispatch login action with username and password
-      dispatch(login({ username, password }));
-      
+      dispatch(login({ username, password }, navigate));
     } catch (error) {
       console.error("Error logging in:", error);
       alert("Error logging in");

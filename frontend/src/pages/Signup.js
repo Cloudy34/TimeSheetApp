@@ -6,15 +6,18 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import "../App.css";
+import { signup } from "store/Authentication/actions";
+import { useDispatch } from "react-redux"; // Import useDispatch hook
 
 function Signup() {
-  const history = useNavigate();
+  const navigate = useNavigate();
   const [fullname, setFullname] = useState("");
   const [username, setUsername] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const dispatch = useDispatch(); // Initialize useDispatch hook
 
   function submit(e) {
     e.preventDefault();
@@ -25,31 +28,10 @@ function Signup() {
       return;
     }
 
-    // Make POST request to server for signup
-    axios
-      .post("http://localhost:8000/signup", {
-        fullname,
-        username,
-        phone,
-        email,
-        password,
-      })
-      .then((res) => {
-        if (res.data == "notexist") {
-          alert("Signup successful");
-          history("/", { state: { id: username } });
-        } else if (res.data === "exist") {
-          alert("User already exists");
-        } else {
-          alert("An error occurred while signing up");
-        }
-      });
-    // .catch((error) => {
-    //   console.error("Error signing up:", error);
-    //   alert("An error occurred while signing up");
-    // });
+    dispatch(signup({ fullname, username, phone, email, password }, navigate));
   }
 
+  
   return (
     <div className="container">
       <div className="form-container">

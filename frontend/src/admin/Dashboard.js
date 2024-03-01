@@ -7,10 +7,7 @@ function Dashboard() {
   return (
     <div>
       <div className="admin"> </div>
-      <h1 className="head">
-        {" "}
-        Hello {location.state.id} and welcome to the Admin Dashboard
-      </h1>
+      <h1 className="head"> Hello and welcome to the Admin Dashboard</h1>
     </div>
   );
 }

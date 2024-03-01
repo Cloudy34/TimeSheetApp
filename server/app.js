@@ -1,39 +1,44 @@
 const express = require("express");
 const collection = require("./mongo");
+//const User = require("./models/User");
 const cors = require("cors");
 const { Collection } = require("mongoose");
 const app = express();
-const dotenv = require("dotenv"); 
+const dotenv = require("dotenv");
 dotenv.config();
+//const Router = require("./routes/general.js");
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true })); // cors is a function on its own-- research
 app.use(cors());
 // This should already be declared in your API file
 // ADD THIS
 app.get("/", cors(), (req, res) => {});
 const port = process.env.PORT;
 
-app.post("/", async (req, res) => {
-  const {  username,  password } = req.body;
-
+app.post("/api/login", async (req, res) => {
+  const { username, password } = req.body; // requesting username and password from the code
+  console.log("data:", username, password);
+  // body that the user inputs and is saved within the
+  // database.
   try {
     const user = await collection.findOne({ username: username });
 
     if (!user) {
       // Email does not exist
-      res.json("notexist");
+      res.json("notexist"); // response for user not existing
     } else {
       // Email exists, check password
       if (user.password === password) {
+        // but if user exists - then and password is matched then he is redirrect to his specific page
         res.json({ status: "success", user: user });
       } else {
         // Incorrect password
-        res.json("incorrectpassword");
+        res.json("incorrectpassword"); // existing user but incorrect password
       }
     }
   } catch (e) {
-    console.error("Error logging in:", e);
+    console.error("Error logging in:", e); // db error when getting user data
     res.json("error");
   }
 });
