@@ -25,29 +25,15 @@ export const login = (credentials, navigate) => async (dispatch) => {
       });
       navigate("/admin/dashboard");
     } else {
-      const errorMessage = response.data.message;
-      console.log("Error: ", errorMessage);
-      if (errorMessage === "Incorrect password") {
-        dispatch({
-          type: LOGIN_FAIL,
-          payload: "Incorrect password. Please try again.",
-        });
-      } else if (errorMessage === "User does not exist") {
-        dispatch({
-          type: LOGIN_FAIL,
-          payload: "User does not exist. Please check your username.",
-        });
-      } else {
-        dispatch({
-          type: LOGIN_FAIL,
-          payload: "An error occurred. Please try again later.",
-        });
-      }
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: response.data.message,
+      });
     }
   } catch (error) {
     dispatch({
       type: LOGIN_FAIL,
-      payload: "An error occurred. Please try again later.",
+      payload: error.message,
     });
   }
 };
@@ -92,7 +78,7 @@ export const signup = (userData, navigate) => async (dispatch) => {
   dispatch(signupRequest());
   try {
     const response = await Axios.post(ENDPOINT_SIGNUP, userData);
-    // console.log("response: ", response);
+    console.log("response:z")
 
     if (response.data.status === "success") {
       dispatch(signupSuccess());
