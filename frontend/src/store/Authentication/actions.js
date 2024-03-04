@@ -10,27 +10,44 @@ import {
 } from "./actionTypes";
 
 const ENDPOINT_LOGIN = "http://localhost:8000/api/login";
-const ENDPOINT_LOGOUT = "/logout";
+const ENDPOINT_LOGOUT = "http://localhost:8000/api/logout";
 
 export const login = (credentials, navigate) => async (dispatch) => {
   console.log("sent creds: ", credentials);
   try {
     const response = await Axios.post(ENDPOINT_LOGIN, credentials);
 
-    if (!response.status) {
-      throw new Error("Login failed");
+    if (response.data.status === "success") {
+      const user = response.data.user;
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: user,
+      });
+      navigate("/admin/dashboard");
+    } else {
+      const errorMessage = response.data.message;
+      console.log("Error: ", errorMessage);
+      if (errorMessage === "Incorrect password") {
+        dispatch({
+          type: LOGIN_FAIL,
+          payload: "Incorrect password. Please try again.",
+        });
+      } else if (errorMessage === "User does not exist") {
+        dispatch({
+          type: LOGIN_FAIL,
+          payload: "User does not exist. Please check your username.",
+        });
+      } else {
+        dispatch({
+          type: LOGIN_FAIL,
+          payload: "An error occurred. Please try again later.",
+        });
+      }
     }
-
-    const user = response.data;
-    dispatch({
-      type: LOGIN_SUCCESS,
-      payload: user,
-    });
-    navigate("/admin/dashboard");
   } catch (error) {
     dispatch({
       type: LOGIN_FAIL,
-      payload: error.message,
+      payload: "An error occurred. Please try again later.",
     });
   }
 };
@@ -49,7 +66,7 @@ export const logout = () => async (dispatch) => {
   }
 };
 
-const ENDPOINT_SIGNUP = "http://localhost:8000/signup";
+const ENDPOINT_SIGNUP = "http://localhost:8000/api/signup";
 
 export const signupRequest = () => {
   return {
@@ -75,13 +92,14 @@ export const signup = (userData, navigate) => async (dispatch) => {
   dispatch(signupRequest());
   try {
     const response = await Axios.post(ENDPOINT_SIGNUP, userData);
+    // console.log("response: ", response);
 
-    if (!response.status) {
-      throw new Error("Signup failed");
+    if (response.data.status === "success") {
+      dispatch(signupSuccess());
+      navigate("/");
+    } else {
+      dispatch(signupFailure(response.data.message));
     }
-
-    dispatch(signupSuccess());
-    navigate("/");
   } catch (error) {
     dispatch(signupFailure(error.message));
   }

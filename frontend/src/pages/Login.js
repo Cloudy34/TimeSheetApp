@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useDispatch } from "react-redux"; // Import useDispatch hook
+import { useDispatch, useSelector } from "react-redux"; // Import useDispatch hook
 import { useNavigate, Link } from "react-router-dom";
 import "../App.css";
 import { login } from "store/Authentication/actions";
@@ -11,7 +11,10 @@ function Login() {
   const dispatch = useDispatch(); // Initialize useDispatch hook
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const { error } = useSelector((state) => ({
+    error: state.authReducer?.error,
+  }));
+  console.log("error: ", error);
 
   async function submit(e) {
     e.preventDefault();
@@ -23,10 +26,15 @@ function Login() {
 
     try {
       // Dispatch login action with username and password
-      dispatch(login({ username, password }, navigate));
+
+      const response = await dispatch(login({ username, password }, navigate));
+
+      if (response && response.payload && response.payload.error) {
+        const errorMessage = response.payload.error;
+        console.log("Error Message", errorMessage);
+      }
     } catch (error) {
       console.error("Error logging in:", error);
-      alert("Error logging in");
     }
   }
 

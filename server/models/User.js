@@ -1,38 +1,13 @@
-import mongoose from "mongoose";
+// models/User.js
 
-const newSchema = new mongoose.Schema(
-  {
-    fullname: {
-      type: String,
-      required: true,
-    },
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    phone: {
-      type: Number,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    role: {
-      type: String,
-      enum: ["admin", "manager", "employee"],
-      default: "employee",
-    },
-  },
-  { timestamps: true }
-);
+const mongoose = require("mongoose");
 
-const User = mongoose.model("User", UserSchema);
-// calling or making a collecion with in the database
-export default User; // export User model
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true, unique: true },
+  fullname: { type: String, required: true },
+  phone: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+});
+
+module.exports = mongoose.model("User", userSchema);
