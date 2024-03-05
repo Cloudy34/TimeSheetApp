@@ -1,28 +1,38 @@
 // controllers/signupController.js
 
 const User = require("../models/User");
+const bcrypt = require("bcryptjs");
 
 exports.signup = async (req, res) => {
   const { fullname, phone, username, email, password } = req.body;
-  console.log("-----------------------------------", fullname);
 
   try {
-    const user = await User.findOne({ email, username, fullname });
+    // Check if the user already exists
+    let existingUser = await User.findOne({
+      $or: [{ email }, { username }, { fullname }],
+    });
 
-    if (user) {
-      res.json("exist");
-    } else {
-      const newUser = await User.create({
-        username,
-        fullname,
-        phone,
-        email,
-        password,
-      });
-      res.json({status: "success", message:"New User Successfully Created"});
+    if (existingUser) {
+      return res.json({ status: "error", message: "User already exists" });
     }
+
+    // If the user doesn't exist, hash the password and create a new user
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({
+      fullname,
+      phone,
+      username,
+      email,
+      password: hashedPassword,
+    });
+    await newUser.save();
+
+    res.json({ status: "success", message: "New user successfully created" });
   } catch (error) {
     console.error("Error signing up:", error);
-    res.json("error");
+    res.json({
+      status: "error",
+      message: "An error occurred while signing up",
+    });
   }
 };

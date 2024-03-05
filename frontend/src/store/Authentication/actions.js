@@ -7,10 +7,14 @@ import {
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
+  PROFILE_FETCH_FAIL,
+  PROFILE_FETCH_SUCCESS,
 } from "./actionTypes";
+import { getHeaders } from "store/utils/tokenauth";
 
 const ENDPOINT_LOGIN = "http://localhost:8000/api/login";
 const ENDPOINT_LOGOUT = "http://localhost:8000/api/logout";
+const ENDPOINT_PROFILE = "http://localhost:8000/api/user";
 
 export const login = (credentials, navigate) => async (dispatch) => {
   console.log("sent creds: ", credentials);
@@ -18,16 +22,16 @@ export const login = (credentials, navigate) => async (dispatch) => {
     const response = await Axios.post(ENDPOINT_LOGIN, credentials);
 
     if (response.data.status === "success") {
-      const user = response.data.user;
+      console.log("user ", response.data);
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: user,
+        payload: response.data,
       });
       navigate("/admin/dashboard");
     } else {
       dispatch({
         type: LOGIN_FAIL,
-        payload: response.data.message,
+        payload: response.data,
       });
     }
   } catch (error) {
@@ -78,7 +82,7 @@ export const signup = (userData, navigate) => async (dispatch) => {
   dispatch(signupRequest());
   try {
     const response = await Axios.post(ENDPOINT_SIGNUP, userData);
-    console.log("response:z")
+    console.log("response:z");
 
     if (response.data.status === "success") {
       dispatch(signupSuccess());
@@ -88,5 +92,32 @@ export const signup = (userData, navigate) => async (dispatch) => {
     }
   } catch (error) {
     dispatch(signupFailure(error.message));
+  }
+};
+
+// get user profile
+export const Profile = () => async (dispatch) => {
+  try {
+    const response = await Axios.get(ENDPOINT_PROFILE, {
+      headers: getHeaders,
+    });
+
+    if (response.data.status === "success") {
+      console.log("user ", response.data);
+      dispatch({
+        type: PROFILE_FETCH_SUCCESS,
+        payload: response.data,
+      });
+    } else {
+      dispatch({
+        type: PROFILE_FETCH_FAIL,
+        payload: response.data,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: PROFILE_FETCH_FAIL,
+      payload: error.message,
+    });
   }
 };

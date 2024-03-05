@@ -5,7 +5,7 @@ export const api = createApi({
   tagTypes: ["User"],
   endpoints: (build) => ({
     getUser: build.query({
-      query: (id) => `mongo/$`,
+      query: (id) => `general/user/${id}`,
       providesTags: ["User"],
     }),
   }),
